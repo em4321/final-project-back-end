@@ -11,6 +11,7 @@ router.patch("/:id", (req, res) => {
 
   if (!(email || password)) {
     res.send({ status: 1, reason: "Missing any data" });
+    return;
   }
 
   id = Number(id);
@@ -24,6 +25,7 @@ router.patch("/:id", (req, res) => {
 
   if (indexOf === -1) {
     res.send({ status: 0, reason: "User not found, check the ID" });
+    return;
   }
 
   if (email) {
@@ -34,6 +36,7 @@ router.patch("/:id", (req, res) => {
   }
 
   res.send({ status: 1 });
+  return;
 });
 
 router.patch("/append/:id", (req, res) => {

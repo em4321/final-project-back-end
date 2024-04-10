@@ -19,6 +19,7 @@ app.use("/user/delete", require("./routes/delete"));
 app.use("/user/update", require("./routes/update"));
 app.use("/user/login", require("./routes/login"));
 app.use("/user/addFavourite", require("./routes/addFavourite"));
+app.use("/user/deleteFavourite", require("./routes/deleteFavourite"));
 
 const PORT = process.env.PORT || 6002;
 app.listen(PORT, () => {

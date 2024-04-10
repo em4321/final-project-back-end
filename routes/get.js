@@ -20,6 +20,7 @@ router.get("/:id", (req, res) => {
 
   if (indexOf === -1) {
     res.send({ status: 0, reason: "User not found, check the ID" });
+    return;
   }
 
   res.send({ status: 1, user: users[indexOf] });
