@@ -18,6 +18,7 @@ app.use("/user/add", require("./routes/add"));
 app.use("/user/delete", require("./routes/delete"));
 app.use("/user/update", require("./routes/update"));
 app.use("/user/login", require("./routes/login"));
+app.use("/user/logout", require("./routes/logout"));
 app.use("/user/addFavourite", require("./routes/addFavourite"));
 app.use("/user/deleteFavourite", require("./routes/deleteFavourite"));
 
