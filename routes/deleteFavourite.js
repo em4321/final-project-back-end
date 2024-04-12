@@ -12,6 +12,7 @@ router.delete("/", (req, res) => {
   console.log(user);
   if (user.favourites) {
     user.favourites.splice(req.body, 1);
+    // user.favourites.splice(indexOf(req.body), 1);
   } else {
     user.favourites = [req.body];
   }

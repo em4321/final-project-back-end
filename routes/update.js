@@ -3,57 +3,42 @@ const router = express.Router();
 const sha256 = require("sha256");
 const { salt } = require("../secrets");
 const { getUserIndexOfById } = require("../utils");
+const { checkToken } = require("../middleware");
 
-router.patch("/:id", (req, res) => {
+router.patch("/:id", checkToken, (req, res) => {
   const { email, password } = req.body;
-  let { id } = req.params;
-  const { users } = req;
 
   if (!(email || password)) {
     res.send({ status: 1, reason: "Missing any data" });
     return;
   }
 
-  id = Number(id);
-
-  if (!id || Number.isNaN(id)) {
-    res.send({ status: 0, reason: "Missing or invalid ID" });
-    return;
-  }
-
-  const indexOf = getUserIndexOfById(users, id);
-
-  if (indexOf === -1) {
-    res.send({ status: 0, reason: "User not found, check the ID" });
-    return;
-  }
-
   if (email) {
-    users[indexOf].email = email;
+    req.authedUser.email = email;
   }
   if (password) {
-    users[indexOf].password = sha256(password + salt);
+    req.authedUser.password = sha256(password + salt);
   }
 
   res.send({ status: 1 });
   return;
 });
 
-router.patch("/append/:id", (req, res) => {
-  let { id } = req.params;
-  const { users } = req;
+// router.patch("/append/:id", (req, res) => {
+//   let { id } = req.params;
+//   const { users } = req;
 
-  id = Number(id);
+//   id = Number(id);
 
-  if (!id || Number.isNaN(id)) {
-    res.send({ status: 0, reason: "Missing or invalid ID" });
-    return;
-  }
+//   if (!id || Number.isNaN(id)) {
+//     res.send({ status: 0, reason: "Missing or invalid ID" });
+//     return;
+//   }
 
-  const indexOf = getUserIndexOfById(users, id);
+//   const indexOf = getUserIndexOfById(users, id);
 
-  users[indexOf].newData = req.body;
-  res.send({ status: 1 });
-});
+//   users[indexOf].newData = req.body;
+//   res.send({ status: 1 });
+// });
 
 module.exports = router;

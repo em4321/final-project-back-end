@@ -1,26 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const { getUserIndexOfById } = require("../utils");
+const { checkToken } = require("../middleware");
 
-router.delete("/:id", (req, res) => {
-  let { id } = req.params;
-  const { users } = req;
+router.delete("/:id", checkToken, (req, res) => {
+  console.log(req.authedUser);
+  delete req.authedUser.email;
+  delete req.authedUser.id;
+  delete req.authedUser.token;
+  delete req.authedUser.password;
 
-  id = Number(id);
-
-  if (!id || Number.isNaN(id)) {
-    res.send({ status: 0, reason: "Missing or invalid ID" });
-    return;
-  }
-
-  const indexOf = getUserIndexOfById(users, id);
-
-  if (indexOf === -1) {
-    res.send({ status: 0, reason: "User not found, check the ID" });
-    return;
-  }
-
-  users.splice(indexOf, 1);
   res.send({ status: 1 });
 });
 
