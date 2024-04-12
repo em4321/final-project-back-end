@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const sha256 = require("sha256");
 const { salt } = require("../secrets");
-const { getUser } = require("../utils");
+const { getUser, getRandom } = require("../utils");
 
 router.post("/", (req, res) => {
   let { users, body, lastUserId } = req;
@@ -21,8 +21,17 @@ router.post("/", (req, res) => {
     return;
   }
   lastUserId.value += Math.floor(Math.random() * 9) + 1;
-  req.users.push({ email, password, id: lastUserId.value });
-  res.send({ status: 1, id: lastUserId.value });
+
+  const token = getRandom();
+
+  const newUser = {
+    email,
+    password,
+    id: lastUserId.value,
+    token: [{ token, issueDate: Date.now() }],
+  };
+  req.users.push(newUser);
+  res.send({ status: 1, id: lastUserId.value, token });
 });
 
 module.exports = router;
