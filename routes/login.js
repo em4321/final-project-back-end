@@ -21,7 +21,9 @@ router.post("/", (req, res) => {
   // const token = Math.floor(Math.random() * 10000000000);
 
   const token = getRandom();
-  user.token ? user.token.push(token) : (user.token = [token]);
+  user.token
+    ? user.token.push({ token, issueDate: Date.now() })
+    : (user.token = [{ token, issueDate: Date.now() }]);
   res.send({ status: 1, token, favourites: user.favourites });
 
   console.log(user);
