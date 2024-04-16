@@ -16,9 +16,8 @@ function checkIsUser(req, res, next) {
 
 function checkToken(req, res, next) {
   const user = req.users.find((user) => {
-    console.log(user.token);
-
     return user.token.find((token) => {
+      console.log(token.token, req.headers.token);
       return token.token == req.headers.token;
     });
 
@@ -30,7 +29,7 @@ function checkToken(req, res, next) {
     next();
     return;
   }
-  res.send({ status: 0, reason: "Bad token" });
+  res.send({ status: 0, reason: "Bad token by auth middleware" });
 }
 
 module.exports = { checkIsUser, checkToken };

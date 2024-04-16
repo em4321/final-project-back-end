@@ -6,12 +6,12 @@ const rateLimit = require("express-rate-limit");
 const limiter = rateLimit({
   windowMs: 10000,
   limit: 5,
-  standardHeaders: "draft-7", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+  // standardHeaders: "draft-7", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+  // legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
   // store: ... , // Redis, Memcached, etc. See below.
 });
 
-app.use(limiter);
+// app.use(limiter);
 
 app.use(cors());
 //users state

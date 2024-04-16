@@ -1,20 +1,21 @@
 const express = require("express");
 const router = express.Router();
+const { checkToken } = require("../middleware");
 
-router.delete("/", (req, res) => {
-  const user = req.users.find((user) => {
-    return user.token === Number(req.headers.token);
-  });
-  if (!user) {
-    res.send({ status: 0, reason: "Bad token" });
-    return;
+router.delete("/", checkToken, (req, res) => {
+  console.log("delete favourite route ran");
+  console.log(req.headers, req.authedUser);
+  if (!req.authedUser) {
+    console.log("user not found", req.headers.token);
   }
-  console.log(user);
-  if (user.favourites) {
-    user.favourites.splice(req.body, 1);
-    // user.favourites.splice(indexOf(req.body), 1);
-  } else {
-    user.favourites = [req.body];
+  const indexOf = req.authedUser.favourites.findIndex((item) => {
+    if (item.singleRestaurant.id == req.headers.id) {
+      return true;
+    }
+  });
+  console.log(indexOf);
+  if (indexOf > -1) {
+    req.authedUser.favourites.splice(indexOf, 1);
   }
   res.send({ status: 1 });
 });
