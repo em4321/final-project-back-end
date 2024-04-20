@@ -12,12 +12,12 @@ function asyncMySql(query) {
   return new Promise((resolve, reject) => {
     connection.query(query, (error, results) => {
       if (error) {
-        reject();
+        reject(error);
         return;
       }
       resolve(results);
     });
   });
-
-  module.exports = asyncMySql;
 }
+
+module.exports = asyncMySql;
