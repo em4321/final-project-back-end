@@ -3,6 +3,7 @@ const { checkToken } = require("./mysql/queries");
 // const { getUserIndexOfById } = require("./utils");
 
 async function checkIsUser(req, res, next) {
+  console.log("here");
   //   const user = req.users.find((user) => {
   //     return req.body.email === user.email;
   //   });

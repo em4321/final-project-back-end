@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const { getUserIndexOfById } = require("../utils");
-const { checkToken } = require("../middleware");
+const { checkToken, checkIsUser } = require("../middleware");
 const asyncMySql = require("../mysql/driver");
 const { deleteUser } = require("../mysql/queries");
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkIsUser, async (req, res) => {
   // console.log(req.authedUser);
   // delete req.authedUser.email;
   // delete req.authedUser.id;

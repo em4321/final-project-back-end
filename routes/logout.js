@@ -1,10 +1,10 @@
 const express = require("express");
-const { checkToken } = require("../middleware");
+const { checkToken, checkIsUser } = require("../middleware");
 const asyncMySql = require("../mysql/driver");
 const { deleteToken } = require("../mysql/queries");
 const router = express.Router();
 
-router.delete("/", checkToken, async (req, res) => {
+router.delete("/", checkIsUser, async (req, res) => {
   // req.authedUser.token.splice(req.authedUser.token.indexOf(req.headers.token));
 
   await asyncMySql(deleteToken(req.headers.token));

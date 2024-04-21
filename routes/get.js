@@ -1,15 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const { getUserIndexOfById } = require("../utils");
 const { checkIsUser, checkToken } = require("../middleware");
+const asyncMySql = require("../mysql/driver");
+const { getUser } = require("../mysql/queries");
 
-//MUST be removed before deployment
-router.get("/", (req, res) => {
-  res.send(req.users);
-});
+router.get("/:id", checkIsUser, async (req, res) => {
+  console.log("Here");
+  const results = await asyncMySql(getUser(req.headers.token));
 
-router.get("/:id", checkToken, (req, res) => {
-  res.send({ status: 1, user: req.authedUser });
+  res.send({ status: 1, user: results[0] });
 });
 
 module.exports = router;
