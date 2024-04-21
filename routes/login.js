@@ -2,21 +2,11 @@ const express = require("express");
 const router = express.Router();
 const sha256 = require("sha256");
 const { salt } = require("../secrets");
-const { getUserIndexOfById, getRandom } = require("../utils");
+const { getRandom } = require("../utils");
 const asyncMySql = require("../mysql/driver");
 
 router.post("/", async (req, res) => {
-  // const { users } = req;
   let { email, password } = req.body;
-
-  // const user = users.find((user) => {
-  //   return user.password === sha256(password + salt) && user.email === email;
-  // });
-
-  // if (!user) {
-  //   res.send({ status: 0, reason: "Bad credentials" });
-  //   return;
-  // }
 
   password = sha256(password + salt);
 
@@ -35,14 +25,6 @@ router.post("/", async (req, res) => {
     return;
   }
   res.send({ status: 0, reason: "entered wrong creds" });
-
-  // const token = getRandom();
-
-  // user.token
-  //   ? user.token.push({ token, issueDate: Date.now() })
-  //   : (user.token = [{ token, issueDate: Date.now() }]);
-
-  // res.send({ status: 1, token, favourites: user.favourites });
 });
 
 module.exports = router;
