@@ -1,22 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { checkToken } = require("../middleware");
+const { checkIsUser } = require("../middleware");
+const asyncMySql = require("../mysql/driver");
 
-router.delete("/", checkToken, (req, res) => {
-  console.log("delete favourite route ran");
-  console.log(req.headers, req.authedUser);
-  if (!req.authedUser) {
-    console.log("user not found", req.headers.token);
-  }
-  const indexOf = req.authedUser.favourites.findIndex((item) => {
-    if (item.singleRestaurant.id == req.headers.id) {
-      return true;
-    }
-  });
-  console.log(indexOf);
-  if (indexOf > -1) {
-    req.authedUser.favourites.splice(indexOf, 1);
-  }
+router.delete("/", checkIsUser, async (req, res) => {
+  const sql = `DELETE FROM favourites
+              WHERE single_restaurant_id = "${req.headers.id}" 
+              AND user_id = ${req.authedUserId};`;
+  await asyncMySql(sql);
   res.send({ status: 1 });
 });
 
