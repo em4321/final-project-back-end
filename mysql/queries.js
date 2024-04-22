@@ -1,15 +1,15 @@
 function addUser(email, password) {
   return `INSERT INTO users
-            (email, password)
-             VALUES
+              (email, password)
+              VALUES
               ("${email}", "${password}");`;
 }
 
 function addToken(userId, token) {
   return `INSERT INTO sessions
-    (user_id, token)
-     VALUES
-     (${userId}, "${token}");`;
+            (user_id, token)
+            VALUES
+            (${userId}, "${token}");`;
 }
 
 function deleteToken(token) {
@@ -19,8 +19,8 @@ function deleteToken(token) {
 
 function deleteUser(token) {
   return `DELETE users, sessions FROM users 
-	JOIN sessions ON users.id = sessions.user_id
-    WHERE token LIKE "${token}";`;
+            JOIN sessions ON users.id = sessions.user_id
+            WHERE token LIKE "${token}";`;
 }
 
 function updateUser(key, value, token) {
@@ -44,6 +44,13 @@ function getUser(token) {
                 WHERE token LIKE "${token}";`;
 }
 
+function addFav(userId, payload, singleRestaurantId) {
+  return `INSERT INTO favourites
+              (user_id, payload, single_restaurant_id)
+              VALUES
+              (${userId}, "${payload}", "${singleRestaurantId}");`;
+}
+
 module.exports = {
   addUser,
   addToken,
@@ -52,4 +59,5 @@ module.exports = {
   updateUser,
   checkToken,
   getUser,
+  addFav,
 };
