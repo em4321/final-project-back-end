@@ -51,6 +51,18 @@ function addFav(userId, payload, singleRestaurantId) {
               (${userId}, "${payload}", "${singleRestaurantId}");`;
 }
 
+function deleteFav(userId, singleRestaurantId) {
+  return `DELETE FROM favourites
+              WHERE single_restaurant_id = "${singleRestaurantId}" 
+              AND user_id = ${userId};`;
+}
+
+function deleteFav(singleRestaurantId, userId) {
+  return `DELETE FROM favourites
+              WHERE single_restaurant_id = "${singleRestaurantId}" 
+              AND user_id = ${userId};`;
+}
+
 module.exports = {
   addUser,
   addToken,
@@ -60,4 +72,5 @@ module.exports = {
   checkToken,
   getUser,
   addFav,
+  deleteFav,
 };
