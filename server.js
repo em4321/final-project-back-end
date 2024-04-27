@@ -25,6 +25,7 @@ app.use("/user/login", require("./routes/login"));
 app.use("/user/logout", require("./routes/logout"));
 app.use("/user/addFavourite", require("./routes/addFavourite"));
 app.use("/user/deleteFavourite", require("./routes/deleteFavourite"));
+app.use("/user/getFavourites", require("./routes/getFavourites"));
 app.use("/proxy", require("./routes/proxy"));
 
 const PORT = process.env.PORT || 6002;
