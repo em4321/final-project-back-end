@@ -4,7 +4,6 @@ const axios = require("axios");
 const { apiKey } = require("../secrets");
 
 router.get("/:locationTerm/:name?", async (req, res) => {
-  console.log("proxy ran");
   try {
     const { locationTerm, name } = req.params;
 
