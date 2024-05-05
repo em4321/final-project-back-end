@@ -8,9 +8,9 @@ const connection = mysql.createConnection({
 });
 connection.connect();
 
-function asyncMySql(query) {
+function asyncMySql(query, params) {
   return new Promise((resolve, reject) => {
-    connection.query(query, (error, results) => {
+    connection.query(query, params, (error, results) => {
       if (error) {
         reject(error);
         return;

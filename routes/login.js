@@ -10,10 +10,21 @@ router.post("/", async (req, res) => {
 
   password = sha256(password + salt);
 
-  const results = await asyncMySql(`SELECT * FROM users
-                                     WHERE email LIKE "${email}" 
-                                     AND password LIKE "${password}";`);
-  if (results.length > 0) {
+  // const results = await asyncMySql(`SELECT * FROM users
+  //                                    WHERE email LIKE "${email}"
+  //                                    AND password LIKE "${password}";`);
+
+  const sql = `SELECT * FROM users
+                WHERE email LIKE ?
+                 AND password LIKE ?;`;
+
+  const results = await asyncMySql(sql, [email, password]);
+
+  // console.log("query:", sql);
+  // console.log("results:", results.length, JSON.stringify(results));
+
+  // if (results.length > 0) {
+  if (results.length === 1) {
     const token = getRandom();
 
     await asyncMySql(`INSERT INTO sessions
