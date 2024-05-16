@@ -8,9 +8,6 @@ router.get("/:locationTerm/:name?", async (req, res) => {
     const { locationTerm, name } = req.params;
 
     const { data } = await axios.get(
-      // `https://api.yelp.com/v3/businesses/search?&categories=restaurants&limit=20&location=${locationTerm}${
-      //   name ? "&term=" + name : " "
-      // }`,
       `https://api.yelp.com/v3/businesses/search?&price=2,3,4&categories=cocktails,restaurants,cafes&limit=50&location=${locationTerm}${
         name ? "&term=" + name : " "
       }`,
